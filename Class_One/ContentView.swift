@@ -9,7 +9,7 @@ struct ContentView: View {
             CardView()
             CardView()
         }
-       
+
        
         
         
@@ -19,23 +19,38 @@ struct ContentView: View {
 } // The struct content view behaves like a View
  // Some view returns a the data in it
 
+// if there is var in a struct you must provide the value
+// You can do local variables in View Structs
+// View Builder can only do conditionals, local variable assignments, lists
+
 struct CardView: View {
-    var isFaceUp: Bool = false
+     @State var isFaceUp = false
+    
     
     var body: some View {
-        ZStack(content: {
+        ZStack{
+            let base = RoundedRectangle(cornerRadius: 12)
+            
             if isFaceUp {
-                RoundedRectangle(cornerRadius:12).foregroundColor(.white)
-                RoundedRectangle(cornerRadius:12).strokeBorder(lineWidth: 2)
+                base.fill(.white)
+                base.strokeBorder(lineWidth: 2)
                 Text("👻").font(.largeTitle)
             } else {
-                RoundedRectangle(cornerRadius:12)
+                base.fill(.orange)
                 Text("😇")
             }
             
             
            
-        }).foregroundColor(.orange)
+        }.onTapGesture{
+            if isFaceUp == true {
+                isFaceUp = false
+            } else {
+                isFaceUp = true
+            }
+            
+            
+        }
     }
 }
 
