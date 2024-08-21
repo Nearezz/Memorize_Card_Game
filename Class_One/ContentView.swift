@@ -1,30 +1,22 @@
 import SwiftUI
 
 struct ContentView: View {
+    let emojis: [String] = ["👻","🎃","🕷️","😈","🥵"]
+    
     var body: some View {
-        
         HStack{
-            CardView(isFaceUp: true)
-            CardView()
-            CardView()
-            CardView()
-        }
-
-       
-        
-        
-        
-        
+            
+            ForEach(emojis.indices,id: \.self){ index in
+                CardView(content:emojis[index])
+            }
+        }.padding()
     }
-} // The struct content view behaves like a View
- // Some view returns a the data in it
-
-// if there is var in a struct you must provide the value
-// You can do local variables in View Structs
-// View Builder can only do conditionals, local variable assignments, lists
-
+}
 struct CardView: View {
+     let content : String
      @State var isFaceUp = false
+     
+        
     
     
     var body: some View {
@@ -34,7 +26,7 @@ struct CardView: View {
             if isFaceUp {
                 base.fill(.white)
                 base.strokeBorder(lineWidth: 2)
-                Text("👻").font(.largeTitle)
+                Text(content).font(.largeTitle)
             } else {
                 base.fill(.orange)
                 Text("😇")
@@ -42,12 +34,8 @@ struct CardView: View {
             
             
            
-        }.onTapGesture{
-            if isFaceUp == true {
-                isFaceUp = false
-            } else {
-                isFaceUp = true
-            }
+        }.onTapGesture{ // View Modifer
+            isFaceUp.toggle()
             
             
         }
@@ -72,3 +60,27 @@ struct CardView: View {
 #Preview {
     ContentView()
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// The struct content view behaves like a View
+ // Some view returns a the data in it
+
+// if there is var in a struct you must provide the value
+// You can do local variables in View Structs
+// View Builder can only do conditionals, local variable assignments, lists
+// Views are immutable
